@@ -1,0 +1,34 @@
+# ===== Java / Maven =====
+target/
+*.class
+*.jar
+*.war
+
+# ===== IDE =====
+.idea/
+*.iml
+.vscode/
+.settings/
+.classpath
+.project
+
+# ===== Node / React =====
+node_modules/
+dist/
+build/
+
+# ===== Environment & secrets =====
+.env
+.env.local
+application-local.properties
+
+# ===== Uploaded images =====
+uploads/
+backend/uploads/
+
+# ===== OS =====
+.DS_Store
+Thumbs.db
+
+# ===== Logs =====
+*.log

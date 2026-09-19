@@ -1,0 +1,47 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: cb-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: cleanbengaluru
+    ports:
+      - "3307:3306"
+    volumes:
+      - cb-mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build: ./backend
+    container_name: cb-backend
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_NAME: cleanbengaluru
+      DB_USERNAME: root
+      DB_PASSWORD: root
+      JWT_SECRET: cleanbengaluru-super-secret-key-change-me-in-production-2026
+      UPLOAD_DIR: /app/uploads
+    ports:
+      - "8080:8080"
+    volumes:
+      - cb-uploads:/app/uploads
+
+  frontend:
+    build: ./frontend
+    container_name: cb-frontend
+    depends_on:
+      - backend
+    ports:
+      - "5173:80"
+
+volumes:
+  cb-mysql-data:
+  cb-uploads:
