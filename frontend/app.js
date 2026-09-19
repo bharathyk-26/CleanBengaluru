@@ -4,8 +4,9 @@
    Loaded first; view modules attach their own render functions after this.
    ========================================================================== */
 
-const API = `${location.protocol}//${location.hostname}:8080/api`;
-const app = document.getElementById('app');
+   const API = (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
+     ? 'http://localhost:8080/api'
+     : 'https://cleanbengaluru-production.up.railway.app/api';const app = document.getElementById('app');
 const layer = document.getElementById('layer');
 const toastBox = document.getElementById('toasts');
 
